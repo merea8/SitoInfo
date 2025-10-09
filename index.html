@@ -1,1 +1,81 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portfolio — Tuo Nome</title>
+  <meta name="description" content="Portfolio personale — raccolta di applicazioni web" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-row">
+      <a class="brand" href="#">Tuo Nome</a>
+      <nav class="nav">
+        <a href="#projects">Progetti</a>
+        <a href="#contact">Contatti</a>
+        <button id="themeToggle" aria-label="Toggle tema" class="btn small">🌙</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>Ciao — sono <strong>Tuo Nome</strong></h1>
+        <p class="lead">Sviluppo applicazioni web semplici, robuste e ben progettate. Qui trovi i miei progetti — clicca su uno per i dettagli.</p>
+        <p>
+          <a class="btn" href="#projects">Vedi progetti</a>
+          <a class="btn ghost" href="#contact">Contattami</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="projects" class="projects container">
+      <div class="projects-header">
+        <h2>Progetti</h2>
+        <div class="controls">
+          <input id="search" type="search" placeholder="Cerca progetti..." aria-label="Cerca progetti" />
+          <select id="filterTech" aria-label="Filtra per tecnologia">
+            <option value="">Tutte le tecnologie</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="grid" class="grid" role="list">
+        <!-- Cards renderizzati via JavaScript -->
+      </div>
+
+      <p class="hint">Per aggiungere un nuovo progetto: apri <code>script.js</code> e modifica l'array <code>projects</code>.</p>
+    </section>
+
+    <div id="modal" class="modal" aria-hidden="true">
+      <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <button id="closeModal" class="modal-close" aria-label="Chiudi">✕</button>
+        <h3 id="modalTitle"></h3>
+        <p id="modalDesc" class="modal-desc"></p>
+        <div id="modalTech" class="chips"></div>
+        <div class="modal-links">
+          <a id="modalDemo" class="btn small" target="_blank" rel="noopener">Apri demo</a>
+          <a id="modalCode" class="btn small ghost" target="_blank" rel="noopener">Repository</a>
+        </div>
+      </div>
+    </div>
+
+    <section id="contact" class="contact container">
+      <h2>Contatti</h2>
+      <p>Preferisci email? <a href="mailto:tuo@email.com">tuo@email.com</a></p>
+      <p class="muted">Oppure trovi i sorgenti su <a href="#">GitHub</a>.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>© <span id="year"></span> Tuo Nome — <a href="#projects">Portfolio</a></small>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
 
