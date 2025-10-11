@@ -23,6 +23,15 @@ const projects = [
     demo: '#',
     repo: '#'
   }
+  {
+  id: 'p_interattivita',
+  title: 'Interattività DOM + JS',
+  desc: 'Pagina dimostrativa: >10 elementi DOM e >10 eventi. JS inline, nello header e in file esterno.',
+  tech: ['HTML','CSS','JavaScript','DOM','Eventi'],
+  demo: 'https://merea8.github.io/interattivita/',
+  repo: 'https://github.com/merea8/interattivita'
+}
+
 ];
 
 const grid = document.getElementById('grid');
