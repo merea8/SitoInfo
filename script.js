@@ -1,29 +1,5 @@
 const projects = [
   {
-    id: 'p1',
-    title: 'ToDo List (Vanilla JS)',
-    desc: 'App per prendere appunti e liste di cose da fare. Salvataggio su LocalStorage, filtri, edit e drag & drop semplice.',
-    tech: ['JavaScript', 'LocalStorage', 'HTML/CSS'],
-    demo: '#',
-    repo: '#'
-  },
-  {
-    id: 'p2',
-    title: 'Weather Widget (API)',
-    desc: 'Widget che consuma un API (demo con dati finti). Mostra utilizzo di fetch e gestione errori.',
-    tech: ['Fetch API', 'Responsive'],
-    demo: '#',
-    repo: '#'
-  },
-  {
-    id: 'p3',
-    title: 'Game: Memory',
-    desc: 'Gioco Memory con logica per matching delle coppie.',
-    tech: ['JavaScript', 'CSS Animations'],
-    demo: '#',
-    repo: '#'
-  }
-  {
   id: 'p_interattivita',
   title: 'Interattività DOM + JS',
   desc: 'Pagina dimostrativa: >10 elementi DOM e >10 eventi. JS inline, nello header e in file esterno.',
