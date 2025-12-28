@@ -1,116 +1,106 @@
-const projects = [
-  {
-  id: 'p_interattivita',
-  title: 'Interattività DOM + JS',
-  desc: 'Pagina dimostrativa: >10 elementi DOM e >10 eventi. JS inline, nello header e in file esterno.',
-  tech: ['HTML','CSS','JavaScript','DOM','Eventi'],
-  demo: 'https://merea8.github.io/interattivita/',
-  repo: 'https://github.com/merea8/interattivita'
-}
+const game = document.getElementById("game");
+const message = document.getElementById("message");
+const restartBtn = document.getElementById("restart");
+const startBtn = document.getElementById("startGame");
+const bgColorPicker = document.getElementById("bgColorPicker");
+const fontSizeSelect = document.getElementById("fontSizeSelect");
+const hoverSpan = document.getElementById("hoverSpan");
+const goHomeBtn = document.getElementById("goHome");
 
-];
+let currentPlayer = "X";
+let board = Array(9).fill(null);
+let gameActive = false;
+let player1 = "Giocatore 1";
+let player2 = "Giocatore 2";
 
-const grid = document.getElementById('grid');
-const search = document.getElementById('search');
-const filterTech = document.getElementById('filterTech');
-const modal = document.getElementById('modal');
-const modalTitle = document.getElementById('modalTitle');
-const modalDesc = document.getElementById('modalDesc');
-const modalTech = document.getElementById('modalTech');
-const modalDemo = document.getElementById('modalDemo');
-const modalCode = document.getElementById('modalCode');
-const closeModal = document.getElementById('closeModal');
-const yearEl = document.getElementById('year');
-const themeToggle = document.getElementById('themeToggle');
+// Genera la griglia
+function generateGrid() {
+  game.innerHTML = "";
+  board = Array(9).fill(null);
+  gameActive = true;
+  currentPlayer = "X";
+  message.textContent = `Turno di ${player1} (X)`;
 
-yearEl.textContent = new Date().getFullYear();
+  for (let i = 0; i < 9; i++) {
+    const cell = document.createElement("div");
+    cell.classList.add("cell");
+    cell.dataset.index = i;
 
-function getAllTechs(){
-  const set = new Set();
-  projects.forEach(p => p.tech.forEach(t => set.add(t)));
-  return Array.from(set).sort();
-}
+    cell.addEventListener("click", handleClick);
+    cell.addEventListener("mouseover", () => cell.style.background = "lightblue");
+    cell.addEventListener("mouseout", () => cell.style.background = "white");
 
-function populateFilter(){
-  const techs = getAllTechs();
-  techs.forEach(t => {
-    const opt = document.createElement('option');
-    opt.value = t; opt.textContent = t;
-    filterTech.appendChild(opt);
-  });
-}
-
-function renderProjects(list){
-  grid.innerHTML = '';
-  list.forEach(p => {
-    const card = document.createElement('article');
-    card.className = 'card';
-    card.setAttribute('role','listitem');
-    card.innerHTML = `
-      <div class="thumb">${escapeHtml(p.title)}</div>
-      <h3>${escapeHtml(p.title)}</h3>
-      <p class="muted">${escapeHtml(p.desc)}</p>
-      <div class="chips">${p.tech.map(t => `<span class="chip">${escapeHtml(t)}</span>`).join('')}</div>
-      <div class="meta">
-        <small class="muted">${p.tech.join(' • ')}</small>
-        <div><button class="btn small" data-id="${p.id}">Dettagli</button></div>
-      </div>`;
-    grid.appendChild(card);
-  });
-  grid.querySelectorAll('button[data-id]').forEach(btn => {
-    btn.addEventListener('click', e => {
-      const id = e.currentTarget.getAttribute('data-id');
-      const project = projects.find(p => p.id === id);
-      if(project) openModal(project);
-    });
-  });
-}
-
-function openModal(project){
-  modal.setAttribute('aria-hidden','false');
-  modalTitle.textContent = project.title;
-  modalDesc.textContent = project.desc;
-  modalTech.innerHTML = project.tech.map(t => `<span class="chip">${escapeHtml(t)}</span>`).join('');
-  modalDemo.href = project.demo || '#';
-  modalCode.href = project.repo || '#';
-}
-function closeModalFn(){ modal.setAttribute('aria-hidden','true'); }
-closeModal.addEventListener('click', closeModalFn);
-modal.addEventListener('click', e => { if(e.target === modal) closeModalFn(); });
-window.addEventListener('keydown', e => { if(e.key === 'Escape') closeModalFn(); });
-
-function applyFilters(){
-  const q = search.value.trim().toLowerCase();
-  const tech = filterTech.value;
-  const filtered = projects.filter(p => {
-    const matchesQ = p.title.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q) || p.tech.join(' ').toLowerCase().includes(q);
-    const matchesTech = tech ? p.tech.includes(tech) : true;
-    return matchesQ && matchesTech;
-  });
-  renderProjects(filtered);
-}
-search.addEventListener('input', applyFilters);
-filterTech.addEventListener('change', applyFilters);
-
-function escapeHtml(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
-
-// Tema chiaro/scuro
-function applySavedTheme(){
-  const t = localStorage.getItem('theme');
-  if(t === 'light') document.documentElement.setAttribute('data-theme','light');
-}
-themeToggle.addEventListener('click', ()=>{
-  const current = document.documentElement.getAttribute('data-theme');
-  if(current === 'light'){
-    document.documentElement.removeAttribute('data-theme');
-    localStorage.removeItem('theme');
-  } else {
-    document.documentElement.setAttribute('data-theme','light');
-    localStorage.setItem('theme','light');
+    game.appendChild(cell);
   }
+}
+
+function checkWin() {
+  const combos = [
+    [0,1,2],[3,4,5],[6,7,8],
+    [0,3,6],[1,4,7],[2,5,8],
+    [0,4,8],[2,4,6]
+  ];
+
+  return combos.some(([a,b,c]) =>
+    board[a] && board[a] === board[b] && board[a] === board[c]
+  );
+}
+
+function handleClick(e) {
+  if (!gameActive) return;
+
+  const index = e.target.dataset.index;
+  if (board[index]) return;
+
+  board[index] = currentPlayer;
+  e.target.textContent = currentPlayer;
+  e.target.classList.add("taken");
+
+  if (checkWin()) {
+    const winner = currentPlayer === "X" ? player1 : player2;
+    message.textContent = `${winner} ha vinto! 🎉`;
+    gameActive = false;
+  } else if (!board.includes(null)) {
+    message.textContent = "Pareggio! 🤝";
+    gameActive = false;
+  } else {
+    currentPlayer = currentPlayer === "X" ? "O" : "X";
+    const nextPlayer = currentPlayer === "X" ? player1 : player2;
+    message.textContent = `Turno di ${nextPlayer} (${currentPlayer})`;
+  }
+}
+
+function restartGame() {
+  generateGrid();
+}
+
+// EVENTI
+restartBtn.addEventListener("click", restartGame);
+
+startBtn.addEventListener("click", () => {
+  player1 = document.getElementById("player1").value.trim() || "Giocatore 1";
+  player2 = document.getElementById("player2").value.trim() || "Giocatore 2";
+  generateGrid();
 });
 
-populateFilter();
-renderProjects(projects);
-applySavedTheme();
+bgColorPicker.addEventListener("input", e => {
+  document.body.style.backgroundColor = e.target.value;
+});
 
+fontSizeSelect.addEventListener("change", e => {
+  document.body.style.fontSize = e.target.value + "px";
+});
+
+hoverSpan.addEventListener("mouseover", () => {
+  hoverSpan.style.color = "green";
+});
+hoverSpan.addEventListener("mouseout", () => {
+  hoverSpan.style.color = "black";
+});
+
+goHomeBtn.addEventListener("click", () => {
+  window.location.href = "../index.html";
+});
+
+// Messaggio iniziale
+message.textContent = "Inserisci i nomi e clicca 'Inizia Partita'.";
