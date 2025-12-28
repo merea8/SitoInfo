@@ -1,79 +1,65 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SitoInfo — Andrea Merelli</title>
-  <meta name="description" content="Portfolio personale — raccolta di applicazioni web" />
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <title>Tris</title>
+  <link rel="stylesheet" href="styles.css">
+
+  <script>
+    function showInfo() {
+      alert("Benvenuto nel gioco del Tris!");
+    }
+  </script>
 </head>
-<body>
-  <header class="site-header">
-    <div class="container header-row">
-      <a class="brand" href="#">Andrea Merelli</a>
-      <nav class="nav">
-        <a href="#projects">Progetti</a>
-        <a href="#contact">Contatti</a>
-        <button id="themeToggle" aria-label="Toggle tema" class="btn small">🌙</button>
-      </nav>
-    </div>
-  </header>
 
-  <main>
-    <section class="hero">
-      <div class="container">
-        <h1>Ciao — sono <strong>Andrea Merelli</strong></h1>
-        <p class="lead">Qua saranno presenti tutti i miei progetti dell'anno scolastico 25/26.</p>
-        <p>
-          <a class="btn" href="#projects">Vedi progetti</a>
-          <a class="btn ghost" href="#contact">Contattami</a>
-        </p>
-      </div>
-    </section>
+<body onload="showInfo()">
 
-    <section id="projects" class="projects container">
-      <div class="projects-header">
-        <h2>Progetti</h2>
-        <div class="controls">
-          <input id="search" type="search" placeholder="Cerca progetti..." aria-label="Cerca progetti" />
-          <select id="filterTech" aria-label="Filtra per tecnologia">
-            <option value="">Tutte le tecnologie</option>
-          </select>
-        </div>
-      </div>
+  <h1 id="title">Gioco del Tris</h1>
 
-      <div id="grid" class="grid" role="list">
-        <!-- Cards renderizzati via JavaScript -->
-      </div>
-    </section>
+  <form id="settings">
+    <label>
+      Giocatore 1:
+      <input type="text" id="player1"
+        onfocus="this.style.background='lightyellow'"
+        onblur="this.style.background='white'">
+    </label>
 
-    <div id="modal" class="modal" aria-hidden="true">
-      <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-        <button id="closeModal" class="modal-close" aria-label="Chiudi">✕</button>
-        <h3 id="modalTitle"></h3>
-        <p id="modalDesc" class="modal-desc"></p>
-        <div id="modalTech" class="chips"></div>
-        <div class="modal-links">
-          <a id="modalDemo" class="btn small" target="_blank" rel="noopener">Apri demo</a>
-          <a id="modalCode" class="btn small ghost" target="_blank" rel="noopener">Repository</a>
-        </div>
-      </div>
-    </div>
+    <label>
+      Giocatore 2:
+      <input type="text" id="player2">
+    </label>
 
-    <section id="contact" class="contact container">
-      <h2>Contatti</h2>
-      <p>Preferisci email? <a href="mailto:merelli.andrea.studente66@email.com">merelli.andrea.studente66@email.com</a></p>
-      <p class="muted">Oppure trovi i sorgenti su <a href="#">GitHub</a>.</p>
-    </section>
-  </main>
+    <button type="button" id="startGame">Inizia Partita</button>
 
-  <footer class="site-footer">
-    <div class="container">
-      <small>© <span id="year"></span> Andrea Merelli — <a href="#projects">Sito Informatica</a></small>
-    </div>
-  </footer>
+    <label>
+      Cambia sfondo:
+      <input type="color" id="bgColorPicker">
+    </label>
+  </form>
 
-  <script src="script.js" defer></script>
+  <div id="game"></div>
+
+  <p id="message"></p>
+
+  <button id="restart">Ricomincia</button>
+
+  <button id="toggleTitle"
+    ondblclick="document.getElementById('title').style.color='red'">
+    Cambia colore titolo (dblclick)
+  </button>
+
+  <button id="goHome">Torna alla Home</button>
+
+  <select id="fontSizeSelect">
+    <option value="16">Font 16px</option>
+    <option value="20">Font 20px</option>
+    <option value="24">Font 24px</option>
+  </select>
+
+  <br><br>
+
+  <span id="hoverSpan">Passa sopra di me!</span>
+
+  <script src="script.js"></script>
 </body>
 </html>
-
