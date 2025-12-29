@@ -99,7 +99,7 @@ hoverSpan.addEventListener("mouseout", () => {
 });
 
 goHomeBtn.addEventListener("click", () => {
-  window.location.href = "../index.html";
+  window.location.href = "http://portmerelli.altervista.org/";
 });
 
 // Messaggio iniziale
